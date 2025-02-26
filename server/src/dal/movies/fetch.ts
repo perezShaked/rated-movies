@@ -1,3 +1,5 @@
+import { topRatedMoviesPageSchema } from '../../validation';
+
 export const fetchTopRatedMovies = async (pageNumber: number) => {
   const apiUrl = process.env.TOP_MOVIES_API_URL;
   const apiKey = process.env.API_KEY;
@@ -14,5 +16,9 @@ export const fetchTopRatedMovies = async (pageNumber: number) => {
 
   return await fetch(url, options)
     .then((res) => res.json())
+    .then((data) => {
+      const parseMoviesData = topRatedMoviesPageSchema.safeParse(data);
+      return parseMoviesData.success ? parseMoviesData.data : parseMoviesData.error.errors;
+    })
     .catch((err) => console.error(err));
 };
