@@ -18,8 +18,8 @@ export const getTopRatedMovies = async ({ params }: Request, res: Response) => {
     res.status(StatusCodes.BAD_REQUEST).json({ error: 'not valid page number' });
   else {
     try {
-      const categories = await fetchTopRatedMovies(Number(params.pageNumber));
-      res.status(StatusCodes.OK).json(categories);
+      const topRatedMovies = await fetchTopRatedMovies(Number(params.pageNumber));
+      res.status(StatusCodes.OK).json(topRatedMovies);
     } catch (error) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
     }
