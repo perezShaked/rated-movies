@@ -1,4 +1,4 @@
-import { MovieCard, MovieModal } from './components';
+import { MovieCard, MovieModal, Pagination } from './components';
 import './App.css';
 
 export const App = () => {
@@ -16,6 +16,7 @@ export const App = () => {
           releaseDate={new Date('1999-10-15')}
         />
       </div>
+      <Pagination pageNumber={444} />
     </>
   );
 };
