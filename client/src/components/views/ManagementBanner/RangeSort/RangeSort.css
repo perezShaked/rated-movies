@@ -1,0 +1,28 @@
+.sortRangeContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sortRangeInputs {
+  display: flex;
+}
+
+.sortRangeTitle {
+  color: #075b93;
+  font-weight: bold;
+}
+
+.sortRangeInput {
+  width: 6rem;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 4px;
+  border: solid 2px #075b9341;
+  transition: all 0.5s;
+}
+
+.sortRangeInput:focus {
+  outline: none;
+  border: solid 2px #075c93;
+  background-color: #06467138;
+}

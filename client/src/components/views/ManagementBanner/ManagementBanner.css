@@ -1,0 +1,20 @@
+.managementContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sortButton {
+  height: 2rem;
+  border-radius: 25px;
+  background-color: #075c93;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.sortButton:hover {
+  background-color: #064671;
+}

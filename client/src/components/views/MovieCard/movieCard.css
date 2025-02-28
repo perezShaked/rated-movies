@@ -7,6 +7,7 @@
   border: solid #b6d0ed00;
   border-radius: 1rem;
   transition: all 0.5s;
+  cursor: pointer;
 }
 
 .movieCardContainer:hover {
