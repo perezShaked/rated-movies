@@ -1,10 +1,14 @@
 import { MovieCard, MovieModal, Pagination, ManagementBanner } from './components';
+import logo from '../public/appIcon.png';
 import './App.css';
 
 export const App = () => {
   return (
     <>
-      <div>rated movies</div>
+      <div className="appTitle">
+        <img className="appLogo" src={logo} />
+        Rated Movies
+      </div>
       <div className="appContainer">
         <ManagementBanner />
         <div className="cards">

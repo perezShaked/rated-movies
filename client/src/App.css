@@ -8,3 +8,13 @@
 .appContainer {
   display: flex;
 }
+
+.appTitle {
+  font-size: 35px;
+  color: #075c93;
+  font-family: 'Ananda Black', sans-serif;
+}
+
+.appLogo {
+  width: 4rem;
+}
