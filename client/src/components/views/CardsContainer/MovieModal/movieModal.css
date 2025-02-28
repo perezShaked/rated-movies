@@ -1,4 +1,19 @@
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+}
+
 .modalContainer {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
   display: grid;
   grid-template-columns: 1fr 1.5fr 0.5fr;
   grid-template-areas:
@@ -6,7 +21,7 @@
     'description description description';
   grid-auto-rows: auto;
   width: 28rem;
-  background-color: #b6d1ed4d;
+  background-color: #b6d0ed;
   box-shadow: 0px 0px 4px 0px #00000014;
   border: solid #b6d0ed00;
   border-radius: 1rem;

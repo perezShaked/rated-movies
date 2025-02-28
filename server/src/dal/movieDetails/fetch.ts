@@ -1,8 +1,12 @@
-export const fetchMovieDetails = async (movieNumber: number) => {
+import { ZodError, ZodIssue } from 'zod';
+import { MovieDetailsType } from '../../types';
+import { movieDetailsSchema } from '../../validation';
+
+export const fetchMovieDetails = async (movieID: number): Promise<MovieDetailsType> => {
   const apiUrl = process.env.MOVIE_DETAILS_URL;
   const apiKey = process.env.API_KEY;
 
-  const url = `${apiUrl}/${movieNumber}?api_key=${apiKey}`;
+  const url = `${apiUrl}/${movieID}?api_key=${apiKey}`;
   const options = {
     method: 'GET',
     headers: {
@@ -12,7 +16,9 @@ export const fetchMovieDetails = async (movieNumber: number) => {
     },
   };
 
-  return await fetch(url, options)
-    .then((res) => res.json())
-    .catch((err) => console.error(err));
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error('Failed fetching movie details');
+  }
+  return response.json();
 };
