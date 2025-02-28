@@ -1,0 +1,35 @@
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: flex-end;
+  position: absolute;
+  z-index: 1;
+  font-weight: bold;
+  font-size: 1.3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+  margin: 0.5rem;
+  background-color: rgba(169, 169, 169, 0.326);
+}
+
+.green {
+  border: 0.3rem solid green;
+  color: green;
+}
+
+.yellow {
+  border: 0.3rem solid yellow;
+  color: yellow;
+}
+
+.orange {
+  border: 0.3rem solid orange;
+  color: orange;
+}
+
+.red {
+  border: 0.3rem solid red;
+  color: red;
+}

@@ -1,0 +1,17 @@
+.booleanSortButton {
+  height: 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  border: 1px solid #075c93;
+  color: #075c93;
+}
+
+.booleanSortButton:hover {
+  background-color: #06467166;
+}
+
+.activeBooleanSort {
+  background-color: #075b9341;
+}
