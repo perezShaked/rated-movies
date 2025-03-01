@@ -1,17 +1,22 @@
+import { useState } from 'react';
 import { CardsContainer, ManagementBanner } from './components';
-import logo from '../public/appIcon.png';
 import './App.css';
 
 export const App = () => {
+  const [searchValue, setSearchValue] = useState('');
+
+  const onSearchValueChange = (value: string) => {
+    setSearchValue(value);
+  };
   return (
     <>
       <div className="appTitle">
-        <img className="appLogo" src={logo} />
+        <img className="appLogo" src={'appIcon.png'} />
         Rated Movies
       </div>
       <div className="appContainer">
-        <ManagementBanner />
-        <CardsContainer />
+        <ManagementBanner searchValue={searchValue} onSearchValueChange={onSearchValueChange} />
+        <CardsContainer searchValue={searchValue} />
       </div>
     </>
   );

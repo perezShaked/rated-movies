@@ -1,15 +1,29 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useGetMoviesPage, useOutsideClick } from '../../../hooks';
 import { Pagination } from '../../elements';
 import { MovieCard } from './MovieCard';
 import { MovieModal } from './MovieModal';
 import './CardsContainer.css';
 
-export const CardsContainer = () => {
+type CardsContainerProps = {
+  searchValue: string;
+};
+
+export const CardsContainer = ({ searchValue }: CardsContainerProps) => {
   const [modalMovieId, setModalMovieId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const movieModalRef = useRef<HTMLDivElement>(null);
   const moviesPage = useGetMoviesPage(pageNumber).moviesPage;
+  const movieModalRef = useRef<HTMLDivElement>(null);
+
+  const displayCards = useMemo(() => {
+    if (searchValue === '') {
+      return moviesPage?.results;
+    }
+    const sortedMovies = moviesPage?.results.filter((movie) =>
+      movie.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    return sortedMovies;
+  }, [searchValue, pageNumber, moviesPage]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -23,7 +37,7 @@ export const CardsContainer = () => {
   return (
     <div className="cards">
       {modalMovieId && <MovieModal ref={movieModalRef} movieId={modalMovieId} />}
-      {moviesPage?.results.map((movie) => {
+      {displayCards?.map((movie) => {
         return (
           <MovieCard
             onClick={() => onMovieCardClick(movie.id)}

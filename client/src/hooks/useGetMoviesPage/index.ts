@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { MoviesPageType } from '../../../../server/src/types';
 import { getMoviesPageAPI } from '../../services';
 
-export function useGetMoviesPage(pageNumber: number) {
+export const useGetMoviesPage = (pageNumber: number) => {
   const [moviesPage, setMoviesPage] = useState<MoviesPageType>();
   const [moviesPageError, setMoviesPageError] = useState(null);
 
@@ -13,4 +13,4 @@ export function useGetMoviesPage(pageNumber: number) {
   }, [pageNumber]);
 
   return { moviesPage, moviesPageError };
-}
+};

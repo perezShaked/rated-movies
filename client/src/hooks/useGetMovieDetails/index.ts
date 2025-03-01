@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { MovieDetailsType } from '../../../../server/src/types';
 import { getMovieDetailsAPI } from '../../services';
 
-export function useGetMovieDetails(movieId: number) {
+export const useGetMovieDetails = (movieId: number) => {
   const [movieDetails, setMovieDetails] = useState<MovieDetailsType>();
   const [movieDetailsError, setMovieDetailsError] = useState(null);
 
@@ -13,4 +13,4 @@ export function useGetMovieDetails(movieId: number) {
   }, []);
 
   return { movieDetails, movieDetailsError };
-}
+};

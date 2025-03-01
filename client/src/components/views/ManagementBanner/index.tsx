@@ -4,12 +4,17 @@ import { Dropdown } from './Dropdown';
 import { BooleanSort } from './BooleanSort';
 import './ManagementBanner.css';
 
-export const ManagementBanner = () => {
+type ManagementBannerProps = {
+  searchValue: string;
+  onSearchValueChange: (value: string) => void;
+};
+
+export const ManagementBanner = ({ onSearchValueChange, searchValue }: ManagementBannerProps) => {
   const exampleOptions = ['Drama', 'Action', 'Roman'];
 
   return (
     <div className="managementContainer">
-      <SearchBar value="" />
+      <SearchBar value={searchValue} onChange={onSearchValueChange} />
       <BooleanSort activeTitle="Hide adult" inactiveTitle="adult hidden" isActive={true} />
       <Dropdown title="genres" options={exampleOptions} isOpen={false} />
       <Dropdown title="language" options={exampleOptions} isOpen={false} />
