@@ -7,15 +7,27 @@ import './ManagementBanner.css';
 type ManagementBannerProps = {
   searchValue: string;
   onSearchValueChange: (value: string) => void;
+  hideAdult: boolean;
+  onHideAdultChange: () => void;
 };
 
-export const ManagementBanner = ({ onSearchValueChange, searchValue }: ManagementBannerProps) => {
+export const ManagementBanner = ({
+  onSearchValueChange,
+  searchValue,
+  hideAdult,
+  onHideAdultChange,
+}: ManagementBannerProps) => {
   const exampleOptions = ['Drama', 'Action', 'Roman'];
 
   return (
     <div className="managementContainer">
       <SearchBar value={searchValue} onChange={onSearchValueChange} />
-      <BooleanSort activeTitle="Hide adult" inactiveTitle="adult hidden" isActive={true} />
+      <BooleanSort
+        activeTitle="Adult hidden"
+        inactiveTitle="Hide adult"
+        isActive={hideAdult}
+        onClick={onHideAdultChange}
+      />
       <Dropdown title="genres" options={exampleOptions} isOpen={false} />
       <Dropdown title="language" options={exampleOptions} isOpen={false} />
       <RangeSort endValueTitle="To" startValueTitle="From" title="Release Year" />

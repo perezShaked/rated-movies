@@ -7,23 +7,28 @@ import './CardsContainer.css';
 
 type CardsContainerProps = {
   searchValue: string;
+  hideAdult: boolean;
 };
 
-export const CardsContainer = ({ searchValue }: CardsContainerProps) => {
+export const CardsContainer = ({ searchValue, hideAdult }: CardsContainerProps) => {
   const [modalMovieId, setModalMovieId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const moviesPage = useGetMoviesPage(pageNumber).moviesPage;
   const movieModalRef = useRef<HTMLDivElement>(null);
 
   const displayCards = useMemo(() => {
-    if (searchValue === '') {
+    if (searchValue === '' && !hideAdult) {
       return moviesPage?.results;
     }
-    const sortedMovies = moviesPage?.results.filter((movie) =>
-      movie.title.toLowerCase().includes(searchValue.toLowerCase())
+
+    const sortedMovies = moviesPage?.results.filter(
+      (movie) =>
+        movie.title.toLowerCase().includes(searchValue.toLowerCase()) && movie.adult === false
     );
+
+    console.log(sortedMovies?.length);
     return sortedMovies;
-  }, [searchValue, pageNumber, moviesPage]);
+  }, [searchValue, pageNumber, moviesPage, hideAdult]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
