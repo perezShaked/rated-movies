@@ -1,9 +1,9 @@
+import { useGetMoviesGenres } from '../../../hooks';
 import { SearchBar } from './SearchBar';
 import { RangeSort } from './RangeSort';
 import { Dropdown } from './Dropdown';
 import { BooleanSort } from './BooleanSort';
 import './ManagementBanner.css';
-import { useGetMoviesGenres } from '../../../hooks';
 
 type ManagementBannerProps = {
   searchValue: string;
@@ -67,7 +67,6 @@ export const ManagementBanner = ({
       />
       {/*       <RangeSort endValueTitle="To" startValueTitle="From" title="Rate" />
       <RangeSort endValueTitle="To" startValueTitle="From" title="Vote Count" /> */}
-      <button className="sortButton">Sort</button>
     </div>
   );
 };
