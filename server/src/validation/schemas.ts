@@ -32,3 +32,12 @@ export const movieDetailsSchema = z.object({
   vote_average: z.number(),
   vote_count: z.number(),
 });
+
+export const genreSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export const genresSchema = z.object({
+  genres: z.array(genreSchema),
+});

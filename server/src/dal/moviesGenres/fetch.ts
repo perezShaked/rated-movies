@@ -1,10 +1,11 @@
-import { MovieDetailsType } from '../../types';
+import { MoviesGenresType } from '../../types';
+import { genresSchema } from '../../validation';
 
-export const fetchMovieDetails = async (movieID: number): Promise<MovieDetailsType> => {
-  const apiUrl = process.env.MOVIE_DETAILS_URL;
+export const fetchMoviesGenres = async (): Promise<MoviesGenresType> => {
+  const apiUrl = process.env.MOVIES_GENRES_URL;
   const apiKey = process.env.API_KEY;
 
-  const url = `${apiUrl}/${movieID}?api_key=${apiKey}`;
+  const url = `${apiUrl}?api_key=${apiKey}`;
   const options = {
     method: 'GET',
     headers: {
@@ -16,7 +17,7 @@ export const fetchMovieDetails = async (movieID: number): Promise<MovieDetailsTy
 
   const response = await fetch(url, options);
   if (!response.ok) {
-    throw new Error('Failed fetching movie details');
+    throw new Error('Failed fetching movies genres');
   }
   return response.json();
 };

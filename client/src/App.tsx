@@ -5,6 +5,9 @@ import './App.css';
 export const App = () => {
   const [searchValue, setSearchValue] = useState('');
   const [hideAdult, setHideAdult] = useState(false);
+  const [languageOptions, setLanguageOptions] = useState<{ name: string }[]>();
+  const [languageSortValue, setLanguageSortValue] = useState<{ name: string } | null>(null);
+  const [genresSortValue, setGenresSortValue] = useState<{ name: string; id: number } | null>(null);
 
   const onSearchValueChange = (value: string) => {
     setSearchValue(value);
@@ -26,8 +29,19 @@ export const App = () => {
           onSearchValueChange={onSearchValueChange}
           hideAdult={hideAdult}
           onHideAdultChange={onHideAdultChange}
+          languageOptions={languageOptions}
+          languageSortValue={languageSortValue}
+          setLanguageSortValue={setLanguageSortValue}
+          genresSortValue={genresSortValue}
+          setGenresSortValue={setGenresSortValue}
         />
-        <CardsContainer searchValue={searchValue} hideAdult={hideAdult} />
+        <CardsContainer
+          searchValue={searchValue}
+          hideAdult={hideAdult}
+          setLanguageOptions={setLanguageOptions}
+          languageSortValue={languageSortValue}
+          genresSortValue={genresSortValue}
+        />
       </div>
     </>
   );

@@ -8,27 +8,55 @@ import './CardsContainer.css';
 type CardsContainerProps = {
   searchValue: string;
   hideAdult: boolean;
+  setLanguageOptions: (languageOptions: { name: string }[]) => void;
+  languageSortValue: { name: string } | null;
+  genresSortValue: { name: string; id: number } | null;
 };
 
-export const CardsContainer = ({ searchValue, hideAdult }: CardsContainerProps) => {
+export const CardsContainer = ({
+  searchValue,
+  hideAdult,
+  setLanguageOptions,
+  languageSortValue,
+  genresSortValue,
+}: CardsContainerProps) => {
   const [modalMovieId, setModalMovieId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const moviesPage = useGetMoviesPage(pageNumber).moviesPage;
   const movieModalRef = useRef<HTMLDivElement>(null);
 
+  const languageOptions = useMemo(() => {
+    return new Set(
+      moviesPage?.results.map((movie) => {
+        return movie.original_language;
+      })
+    );
+  }, [moviesPage]);
+
+  useEffect(() => {
+    setLanguageOptions([...languageOptions].map((lang) => ({ name: lang })));
+  }, [languageOptions]);
+
   const displayCards = useMemo(() => {
-    if (searchValue === '' && !hideAdult) {
+    if (
+      searchValue === '' &&
+      hideAdult === false &&
+      languageSortValue === null &&
+      genresSortValue === null
+    ) {
       return moviesPage?.results;
     }
 
     const sortedMovies = moviesPage?.results.filter(
       (movie) =>
-        movie.title.toLowerCase().includes(searchValue.toLowerCase()) && movie.adult === false
+        (movie.title.toLowerCase().includes(searchValue.toLowerCase()) &&
+          movie.adult === false &&
+          (languageSortValue === null || movie.original_language === languageSortValue?.name) &&
+          genresSortValue === null) ||
+        (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id))
     );
-
-    console.log(sortedMovies?.length);
     return sortedMovies;
-  }, [searchValue, pageNumber, moviesPage, hideAdult]);
+  }, [searchValue, pageNumber, moviesPage, hideAdult, languageSortValue, genresSortValue]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
