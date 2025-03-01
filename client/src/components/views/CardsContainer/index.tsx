@@ -49,11 +49,11 @@ export const CardsContainer = ({
 
     const sortedMovies = moviesPage?.results.filter(
       (movie) =>
-        (movie.title.toLowerCase().includes(searchValue.toLowerCase()) &&
-          movie.adult === false &&
-          (languageSortValue === null || movie.original_language === languageSortValue?.name) &&
-          genresSortValue === null) ||
-        (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id))
+        movie.title.toLowerCase().includes(searchValue.toLowerCase()) &&
+        movie.adult === false &&
+        (languageSortValue === null || movie.original_language === languageSortValue?.name) &&
+        (genresSortValue === null ||
+          (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id)))
     );
     return sortedMovies;
   }, [searchValue, pageNumber, moviesPage, hideAdult, languageSortValue, genresSortValue]);
