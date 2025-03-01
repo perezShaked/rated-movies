@@ -11,6 +11,8 @@ type CardsContainerProps = {
   setLanguageOptions: (languageOptions: { name: string }[]) => void;
   languageSortValue: { name: string } | null;
   genresSortValue: { name: string; id: number } | null;
+  releaseYearSortStart?: number;
+  releaseYearSortEnd?: number;
 };
 
 export const CardsContainer = ({
@@ -19,6 +21,8 @@ export const CardsContainer = ({
   setLanguageOptions,
   languageSortValue,
   genresSortValue,
+  releaseYearSortStart,
+  releaseYearSortEnd,
 }: CardsContainerProps) => {
   const [modalMovieId, setModalMovieId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -42,7 +46,9 @@ export const CardsContainer = ({
       searchValue === '' &&
       hideAdult === false &&
       languageSortValue === null &&
-      genresSortValue === null
+      genresSortValue === null &&
+      releaseYearSortStart === undefined &&
+      releaseYearSortEnd === undefined
     ) {
       return moviesPage?.results;
     }
@@ -53,10 +59,23 @@ export const CardsContainer = ({
         movie.adult === false &&
         (languageSortValue === null || movie.original_language === languageSortValue?.name) &&
         (genresSortValue === null ||
-          (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id)))
+          (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id))) &&
+        (releaseYearSortStart === undefined ||
+          new Date(movie.release_date).getFullYear() >= releaseYearSortStart) &&
+        (releaseYearSortEnd === undefined ||
+          new Date(movie.release_date).getFullYear() <= releaseYearSortEnd)
     );
     return sortedMovies;
-  }, [searchValue, pageNumber, moviesPage, hideAdult, languageSortValue, genresSortValue]);
+  }, [
+    searchValue,
+    pageNumber,
+    moviesPage,
+    hideAdult,
+    languageSortValue,
+    genresSortValue,
+    releaseYearSortStart,
+    releaseYearSortEnd,
+  ]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

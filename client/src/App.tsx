@@ -8,6 +8,8 @@ export const App = () => {
   const [languageOptions, setLanguageOptions] = useState<{ name: string }[]>();
   const [languageSortValue, setLanguageSortValue] = useState<{ name: string } | null>(null);
   const [genresSortValue, setGenresSortValue] = useState<{ name: string; id: number } | null>(null);
+  const [releaseYearSortStart, setReleaseYearSortStart] = useState<number>();
+  const [releaseYearSortEnd, setReleaseYearSortEnd] = useState<number>();
 
   const onSearchValueChange = (value: string) => {
     setSearchValue(value);
@@ -34,6 +36,11 @@ export const App = () => {
           setLanguageSortValue={setLanguageSortValue}
           genresSortValue={genresSortValue}
           setGenresSortValue={setGenresSortValue}
+          releaseYearSortEndControl={{ value: releaseYearSortEnd, setFunc: setReleaseYearSortEnd }}
+          releaseYearSortStartControl={{
+            value: releaseYearSortStart,
+            setFunc: setReleaseYearSortStart,
+          }}
         />
         <CardsContainer
           searchValue={searchValue}
@@ -41,6 +48,8 @@ export const App = () => {
           setLanguageOptions={setLanguageOptions}
           languageSortValue={languageSortValue}
           genresSortValue={genresSortValue}
+          releaseYearSortStart={releaseYearSortStart}
+          releaseYearSortEnd={releaseYearSortEnd}
         />
       </div>
     </>
