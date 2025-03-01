@@ -1,4 +1,5 @@
 import { useGetMovieDetails } from '../../../../hooks';
+import { roundRateScore } from '../../../../utils';
 import { ScoreView } from '../../../elements';
 import './movieModal.css';
 
@@ -25,7 +26,7 @@ export const MovieModal = ({ movieId, ref }: MovieModalProps) => {
             <div className="modalGenres">{`Genres: ${movieDetails?.genres}`}</div>
           </div>
           <div className="modalFullDescription">{movieDetails?.overview}</div>
-          <ScoreView score={(movieDetails && Math.round(movieDetails.vote_average * 10)) || 0} />
+          <ScoreView score={(movieDetails && roundRateScore(movieDetails.vote_average)) || 0} />
         </div>
       )}
     </div>

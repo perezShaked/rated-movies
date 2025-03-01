@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useGetMoviesPage, useOutsideClick } from '../../../hooks';
+import { roundRateScore } from '../../../utils';
 import { Pagination } from '../../elements';
 import { MovieCard } from './MovieCard';
 import { MovieModal } from './MovieModal';
@@ -13,6 +14,10 @@ type CardsContainerProps = {
   genresSortValue: { name: string; id: number } | null;
   releaseYearSortStart?: number;
   releaseYearSortEnd?: number;
+  rateSortStart?: number;
+  rateSortEnd?: number;
+  voteCountSortStart?: number;
+  voteCountSortEnd?: number;
 };
 
 export const CardsContainer = ({
@@ -23,6 +28,10 @@ export const CardsContainer = ({
   genresSortValue,
   releaseYearSortStart,
   releaseYearSortEnd,
+  rateSortStart,
+  rateSortEnd,
+  voteCountSortStart,
+  voteCountSortEnd,
 }: CardsContainerProps) => {
   const [modalMovieId, setModalMovieId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -48,7 +57,11 @@ export const CardsContainer = ({
       languageSortValue === null &&
       genresSortValue === null &&
       releaseYearSortStart === undefined &&
-      releaseYearSortEnd === undefined
+      releaseYearSortEnd === undefined &&
+      rateSortStart === undefined &&
+      rateSortEnd === undefined &&
+      voteCountSortStart === undefined &&
+      voteCountSortEnd === undefined
     ) {
       return moviesPage?.results;
     }
@@ -63,7 +76,11 @@ export const CardsContainer = ({
         (releaseYearSortStart === undefined ||
           new Date(movie.release_date).getFullYear() >= releaseYearSortStart) &&
         (releaseYearSortEnd === undefined ||
-          new Date(movie.release_date).getFullYear() <= releaseYearSortEnd)
+          new Date(movie.release_date).getFullYear() <= releaseYearSortEnd) &&
+        (rateSortStart === undefined || roundRateScore(movie.vote_average) >= rateSortStart) &&
+        (rateSortEnd === undefined || roundRateScore(movie.vote_average) <= rateSortEnd) &&
+        (voteCountSortStart === undefined || movie.vote_count >= voteCountSortStart) &&
+        (voteCountSortEnd === undefined || movie.vote_count <= voteCountSortEnd)
     );
     return sortedMovies;
   }, [
@@ -75,6 +92,10 @@ export const CardsContainer = ({
     genresSortValue,
     releaseYearSortStart,
     releaseYearSortEnd,
+    rateSortStart,
+    rateSortEnd,
+    voteCountSortStart,
+    voteCountSortEnd,
   ]);
 
   useEffect(() => {
@@ -96,7 +117,7 @@ export const CardsContainer = ({
             title={movie.title}
             description={movie.overview}
             posterPath={movie.poster_path}
-            score={Math.round(movie.vote_average * 10)}
+            score={roundRateScore(movie.vote_average)}
             key={movie.id}
           />
         );

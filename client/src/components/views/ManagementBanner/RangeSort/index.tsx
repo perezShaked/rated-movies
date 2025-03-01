@@ -39,7 +39,7 @@ export const RangeSort = ({
           <input
             type="number"
             className="sortRangeInput"
-            value={startValue}
+            value={startValue ?? ''}
             onChange={(event) => {
               OnValueUpdate(event, setStartValue);
             }}
@@ -53,7 +53,7 @@ export const RangeSort = ({
           <input
             type="number"
             className="sortRangeInput"
-            value={endValue}
+            value={endValue ?? ''}
             onChange={(event) => {
               OnValueUpdate(event, setEndValue);
             }}

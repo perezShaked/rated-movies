@@ -10,6 +10,10 @@ export const App = () => {
   const [genresSortValue, setGenresSortValue] = useState<{ name: string; id: number } | null>(null);
   const [releaseYearSortStart, setReleaseYearSortStart] = useState<number>();
   const [releaseYearSortEnd, setReleaseYearSortEnd] = useState<number>();
+  const [rateSortStart, setRateSortStart] = useState<number>();
+  const [rateSortEnd, setRateSortEnd] = useState<number>();
+  const [voteCountSortStart, setVoteCountSortStart] = useState<number>();
+  const [voteCountSortEnd, setVoteCountSortEnd] = useState<number>();
 
   const onSearchValueChange = (value: string) => {
     setSearchValue(value);
@@ -41,6 +45,10 @@ export const App = () => {
             value: releaseYearSortStart,
             setFunc: setReleaseYearSortStart,
           }}
+          rateSortStartControl={{ value: rateSortStart, setFunc: setRateSortStart }}
+          rateSortEndControl={{ value: rateSortEnd, setFunc: setRateSortEnd }}
+          voteCountSortStartControl={{ value: voteCountSortStart, setFunc: setVoteCountSortStart }}
+          voteCountSortEndControl={{ value: voteCountSortEnd, setFunc: setVoteCountSortEnd }}
         />
         <CardsContainer
           searchValue={searchValue}
@@ -50,6 +58,10 @@ export const App = () => {
           genresSortValue={genresSortValue}
           releaseYearSortStart={releaseYearSortStart}
           releaseYearSortEnd={releaseYearSortEnd}
+          rateSortStart={rateSortStart}
+          rateSortEnd={rateSortEnd}
+          voteCountSortStart={voteCountSortStart}
+          voteCountSortEnd={voteCountSortEnd}
         />
       </div>
     </>

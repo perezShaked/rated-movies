@@ -17,6 +17,10 @@ type ManagementBannerProps = {
   setGenresSortValue: (value: { name: string; id: number } | null) => void;
   releaseYearSortEndControl: { value?: number; setFunc: (start?: number) => void };
   releaseYearSortStartControl: { value?: number; setFunc: (start?: number) => void };
+  rateSortStartControl: { value?: number; setFunc: (start?: number) => void };
+  rateSortEndControl: { value?: number; setFunc: (start?: number) => void };
+  voteCountSortStartControl: { value?: number; setFunc: (start?: number) => void };
+  voteCountSortEndControl: { value?: number; setFunc: (start?: number) => void };
 };
 
 export const ManagementBanner = ({
@@ -31,6 +35,10 @@ export const ManagementBanner = ({
   setGenresSortValue,
   releaseYearSortEndControl,
   releaseYearSortStartControl,
+  rateSortStartControl,
+  rateSortEndControl,
+  voteCountSortStartControl,
+  voteCountSortEndControl,
 }: ManagementBannerProps) => {
   const moviesGenres = useGetMoviesGenres();
 
@@ -65,8 +73,23 @@ export const ManagementBanner = ({
           end: releaseYearSortEndControl.setFunc,
         }}
       />
-      {/*       <RangeSort endValueTitle="To" startValueTitle="From" title="Rate" />
-      <RangeSort endValueTitle="To" startValueTitle="From" title="Vote Count" /> */}
+      <RangeSort
+        endValueTitle="To"
+        startValueTitle="From"
+        title="Rate"
+        values={{ start: rateSortStartControl.value, end: rateSortEndControl.value }}
+        setValues={{ start: rateSortStartControl.setFunc, end: rateSortEndControl.setFunc }}
+      />
+      <RangeSort
+        endValueTitle="To"
+        startValueTitle="From"
+        title="Vote Count"
+        values={{ start: voteCountSortStartControl.value, end: voteCountSortEndControl.value }}
+        setValues={{
+          start: voteCountSortStartControl.setFunc,
+          end: voteCountSortEndControl.setFunc,
+        }}
+      />
     </div>
   );
 };
