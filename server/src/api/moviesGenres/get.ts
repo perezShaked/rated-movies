@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import { fetchMoviesGenres } from '../../dal';
 import { Request, Response } from 'express';
+import { fetchMoviesGenres } from '../../dal';
 
 export const getMoviesGenres = async (_req: Request, res: Response) => {
   try {

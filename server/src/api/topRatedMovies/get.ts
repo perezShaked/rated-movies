@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import { fetchTopRatedMovies } from '../../dal';
 import { Request, Response } from 'express';
+import { fetchTopRatedMovies } from '../../dal';
 
 const isPageNumberValid = (pageNumber: string): boolean => {
   const minPageNumber = 1;

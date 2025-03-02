@@ -1,7 +1,8 @@
 import { MovieDetailsType } from '../../types';
+import { movieDetailsApiUrl } from '../../config';
 
 export const fetchMovieDetails = async (movieID: number): Promise<MovieDetailsType> => {
-  const apiUrl = process.env.MOVIE_DETAILS_URL;
+  const apiUrl = movieDetailsApiUrl;
   const apiKey = process.env.API_KEY;
 
   const url = `${apiUrl}/${movieID}?api_key=${apiKey}`;

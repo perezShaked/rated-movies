@@ -1,8 +1,8 @@
 import { MoviesGenresType } from '../../types';
-import { genresSchema } from '../../validation';
+import { moviesGenresApiUrl } from '../../config';
 
 export const fetchMoviesGenres = async (): Promise<MoviesGenresType> => {
-  const apiUrl = process.env.MOVIES_GENRES_URL;
+  const apiUrl = moviesGenresApiUrl;
   const apiKey = process.env.API_KEY;
 
   const url = `${apiUrl}?api_key=${apiKey}`;

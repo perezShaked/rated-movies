@@ -1,7 +1,8 @@
 import { topRatedMoviesPageSchema } from '../../validation';
+import { topMoviesApiUrl } from '../../config';
 
 export const fetchTopRatedMovies = async (pageNumber: number) => {
-  const apiUrl = process.env.TOP_MOVIES_API_URL;
+  const apiUrl = topMoviesApiUrl;
   const apiKey = process.env.API_KEY;
 
   const url = `${apiUrl}?api_key=${apiKey}&page=${pageNumber}`;
