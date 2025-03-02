@@ -35,6 +35,7 @@ Rated Movies is a React-based web application that lets users explore top-rated 
 
 ## Project Structure
 
+```
 ├── 📂 client # Frontend - React (Vite + TypeScript)
 │ ├── 📂 public # Static assets
 │ ├── 📂 src # Source code
@@ -58,3 +59,4 @@ Rated Movies is a React-based web application that lets users explore top-rated 
 │ ├── server.ts # Main server entry point
 │ ├── package.json # Backend dependencies
 │ ├── tsconfig.json # TypeScript configuration
+```
