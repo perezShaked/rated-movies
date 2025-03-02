@@ -1,10 +1,3 @@
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-
 .appContainer {
   display: flex;
 }
@@ -17,4 +10,11 @@
 
 .appLogo {
   width: 4rem;
+}
+
+/* remove arrows in numbers input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

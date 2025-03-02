@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
-import { fetchMovieDetails } from '../../dal';
 import { Request, Response } from 'express';
+import { fetchMovieDetails } from '../../dal';
 
 export const getMovieDetails = async ({ params }: Request, res: Response) => {
   const movieID = Number(params.movieID);

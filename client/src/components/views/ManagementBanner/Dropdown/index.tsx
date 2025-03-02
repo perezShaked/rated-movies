@@ -1,23 +1,36 @@
+import { useState } from 'react';
 import './Dropdown.css';
 
 type DropdownProps = {
   title: string;
-  isOpen: boolean;
-  options: string[];
+  options: { name: string; id?: number }[] | undefined;
+  value?: { name: string; id?: number };
+  setValue: (value?: { name: string; id: number }) => void;
 };
 
-export const Dropdown = ({ title, isOpen, options }: DropdownProps) => {
+export const Dropdown = ({ title, options, value, setValue }: DropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="dropdownContainer">
-      <button className="dropdownTitle">
-        {title} <ArrowIcon isOpen={isOpen} />
+      <button className="dropdownTitle" onClick={() => setIsOpen((isOpen) => !isOpen)}>
+        {value ? value.name : title} <ArrowIcon isOpen={isOpen} />
       </button>
       {isOpen && (
         <div className="dropdownOptions">
-          {options.map((option, index) => {
+          {options?.map((option, index) => {
             return (
-              <button className="dropdownOption" key={index}>
-                {option}
+              <button
+                className="dropdownOption"
+                key={index}
+                onClick={() => {
+                  value?.name === option.name
+                    ? setValue(undefined)
+                    : setValue({ name: option.name, id: option.id || 0 });
+                  setIsOpen(false);
+                }}
+              >
+                {option.name}
               </button>
             );
           })}

@@ -1,0 +1,16 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.moviesCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 29rem;
+  gap: 1rem;
+  width: 100%;
+}

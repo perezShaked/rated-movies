@@ -1,16 +1,17 @@
-import { ScoreView } from '../../elements';
+import { ScoreView } from '../../../elements';
 import './movieCard.css';
 
 type MovieCardProps = {
   title: string;
   score: number;
-  posterPath: string;
+  posterPath: string | null;
   description: string;
+  onClick: () => void;
 };
 
-export const MovieCard = ({ title, score, posterPath, description }: MovieCardProps) => {
+export const MovieCard = ({ title, score, posterPath, description, onClick }: MovieCardProps) => {
   return (
-    <div className="movieCardContainer">
+    <div className="movieCardContainer" onClick={onClick}>
       <ScoreView score={score} />
       <img className="moviePoster" src={`https://image.tmdb.org/t/p/w185${posterPath}`}></img>
       <div className="cardText">
