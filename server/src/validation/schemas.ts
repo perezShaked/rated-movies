@@ -6,7 +6,7 @@ export const MovieSchema = z.object({
   id: z.number(),
   original_language: z.string(),
   overview: z.string(),
-  poster_path: z.string(),
+  poster_path: z.string().nullable(),
   release_date: z.string(),
   title: z.string(),
   vote_average: z.number(),

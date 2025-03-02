@@ -11,3 +11,10 @@
 .appLogo {
   width: 4rem;
 }
+
+/* remove arrows in numbers input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

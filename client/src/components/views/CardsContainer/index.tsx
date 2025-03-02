@@ -133,18 +133,20 @@ export const CardsContainer = ({
   return (
     <div className="cards">
       {modalMovieId && <MovieModal ref={movieModalRef} movieId={modalMovieId} />}
-      {displayCards?.map((movie) => {
-        return (
-          <MovieCard
-            onClick={() => openModalOnMovieCardClick(movie.id)}
-            title={movie.title}
-            description={movie.overview}
-            posterPath={movie.poster_path}
-            score={roundRateScore(movie.vote_average)}
-            key={movie.id}
-          />
-        );
-      })}
+      <div className="moviesCards">
+        {displayCards?.map((movie) => {
+          return (
+            <MovieCard
+              onClick={() => openModalOnMovieCardClick(movie.id)}
+              title={movie.title}
+              description={movie.overview}
+              posterPath={movie.poster_path}
+              score={roundRateScore(movie.vote_average)}
+              key={movie.id}
+            />
+          );
+        })}
+      </div>
       <Pagination
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}

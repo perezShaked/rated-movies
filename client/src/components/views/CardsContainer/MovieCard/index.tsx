@@ -4,7 +4,7 @@ import './movieCard.css';
 type MovieCardProps = {
   title: string;
   score: number;
-  posterPath: string;
+  posterPath: string | null;
   description: string;
   onClick: () => void;
 };
