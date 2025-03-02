@@ -2,17 +2,13 @@ import { z } from 'zod';
 
 export const MovieSchema = z.object({
   adult: z.boolean(),
-  backdrop_path: z.string(),
   genre_ids: z.array(z.number()),
   id: z.number(),
   original_language: z.string(),
-  original_title: z.string(),
   overview: z.string(),
-  popularity: z.number(),
   poster_path: z.string(),
   release_date: z.string(),
   title: z.string(),
-  video: z.boolean(),
   vote_average: z.number(),
   vote_count: z.number(),
 });
@@ -22,4 +18,26 @@ export const topRatedMoviesPageSchema = z.object({
   results: z.array(MovieSchema),
   total_pages: z.number(),
   total_results: z.number(),
+});
+
+export const movieDetailsSchema = z.object({
+  adult: z.boolean(),
+  budget: z.number(),
+  genres: z.array(z.object({ id: z.number(), name: z.string() })),
+  original_language: z.string(),
+  overview: z.string(),
+  poster_path: z.string(),
+  release_date: z.string(),
+  title: z.string(),
+  vote_average: z.number(),
+  vote_count: z.number(),
+});
+
+export const genreSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export const genresSchema = z.object({
+  genres: z.array(genreSchema),
 });

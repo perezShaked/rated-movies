@@ -1,7 +1,7 @@
 .movieCardContainer {
   display: grid;
   grid-template-rows: auto 1fr;
-  width: 14rem;
+  width: 11rem;
   background-color: #b6d1ed4d;
   box-shadow: 0px 0px 4px 0px #00000014;
   border: solid #b6d0ed00;
