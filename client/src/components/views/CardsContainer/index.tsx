@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
+import { MovieType } from '../../../../../server/src/types';
 import { useGetMoviesPage, useOutsideClick } from '../../../hooks';
 import { roundRateScore } from '../../../utils';
 import { Pagination } from '../../elements';
@@ -10,8 +11,8 @@ type CardsContainerProps = {
   searchValue: string;
   hideAdult: boolean;
   setLanguageOptions: (languageOptions: { name: string }[]) => void;
-  languageSortValue: { name: string } | null;
-  genresSortValue: { name: string; id: number } | null;
+  languageSortValue?: { name: string };
+  genresSortValue?: { name: string; id: number };
   releaseYearSortStart?: number;
   releaseYearSortEnd?: number;
   rateSortStart?: number;
@@ -35,58 +36,67 @@ export const CardsContainer = ({
 }: CardsContainerProps) => {
   const [modalMovieId, setModalMovieId] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const moviesPage = useGetMoviesPage(pageNumber).moviesPage;
+  const moviesPageData = useGetMoviesPage(pageNumber).moviesPage;
   const movieModalRef = useRef<HTMLDivElement>(null);
 
-  const languageOptions = useMemo(() => {
-    return new Set(
-      moviesPage?.results.map((movie) => {
-        return movie.original_language;
-      })
+  const filterBySearch = (movie: MovieType) => {
+    return searchValue === '' || movie.title.toLowerCase().includes(searchValue.toLowerCase());
+  };
+
+  const filterByHideAdult = (movie: MovieType) => {
+    return hideAdult === false || movie.adult === false;
+  };
+
+  const filterByLanguage = (movie: MovieType) => {
+    return languageSortValue === undefined || movie.original_language === languageSortValue?.name;
+  };
+
+  const filterByGenre = (movie: MovieType) => {
+    return (
+      genresSortValue === undefined ||
+      (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id))
     );
-  }, [moviesPage]);
+  };
 
-  useEffect(() => {
-    setLanguageOptions([...languageOptions].map((lang) => ({ name: lang })));
-  }, [languageOptions]);
+  const filterByReleaseYear = (movie: MovieType) => {
+    return (
+      (releaseYearSortStart === undefined ||
+        new Date(movie.release_date).getFullYear() >= releaseYearSortStart) &&
+      (releaseYearSortEnd === undefined ||
+        new Date(movie.release_date).getFullYear() <= releaseYearSortEnd)
+    );
+  };
 
+  const filterByRateScore = (movie: MovieType) => {
+    return (
+      (rateSortStart === undefined || roundRateScore(movie.vote_average) >= rateSortStart) &&
+      (rateSortEnd === undefined || roundRateScore(movie.vote_average) <= rateSortEnd)
+    );
+  };
+
+  const filterByVoteCount = (movie: MovieType) => {
+    return (
+      (voteCountSortStart === undefined || movie.vote_count >= voteCountSortStart) &&
+      (voteCountSortEnd === undefined || movie.vote_count <= voteCountSortEnd)
+    );
+  };
+
+  // Re-filter displayed cards whenever any filter value changes
   const displayCards = useMemo(() => {
-    if (
-      searchValue === '' &&
-      hideAdult === false &&
-      languageSortValue === null &&
-      genresSortValue === null &&
-      releaseYearSortStart === undefined &&
-      releaseYearSortEnd === undefined &&
-      rateSortStart === undefined &&
-      rateSortEnd === undefined &&
-      voteCountSortStart === undefined &&
-      voteCountSortEnd === undefined
-    ) {
-      return moviesPage?.results;
-    }
-
-    const sortedMovies = moviesPage?.results.filter(
+    const sortedMovies = moviesPageData?.results.filter(
       (movie) =>
-        movie.title.toLowerCase().includes(searchValue.toLowerCase()) &&
-        movie.adult === false &&
-        (languageSortValue === null || movie.original_language === languageSortValue?.name) &&
-        (genresSortValue === null ||
-          (genresSortValue?.id && movie.genre_ids.includes(genresSortValue?.id))) &&
-        (releaseYearSortStart === undefined ||
-          new Date(movie.release_date).getFullYear() >= releaseYearSortStart) &&
-        (releaseYearSortEnd === undefined ||
-          new Date(movie.release_date).getFullYear() <= releaseYearSortEnd) &&
-        (rateSortStart === undefined || roundRateScore(movie.vote_average) >= rateSortStart) &&
-        (rateSortEnd === undefined || roundRateScore(movie.vote_average) <= rateSortEnd) &&
-        (voteCountSortStart === undefined || movie.vote_count >= voteCountSortStart) &&
-        (voteCountSortEnd === undefined || movie.vote_count <= voteCountSortEnd)
+        filterBySearch(movie) &&
+        filterByHideAdult(movie) &&
+        filterByLanguage(movie) &&
+        filterByGenre(movie) &&
+        filterByReleaseYear(movie) &&
+        filterByRateScore(movie) &&
+        filterByVoteCount(movie)
     );
     return sortedMovies;
   }, [
     searchValue,
-    pageNumber,
-    moviesPage,
+    moviesPageData,
     hideAdult,
     languageSortValue,
     genresSortValue,
@@ -98,22 +108,35 @@ export const CardsContainer = ({
     voteCountSortEnd,
   ]);
 
+  //Update dropdown language options based on the languages in the current page movies
+  useEffect(() => {
+    const languageOptions = new Set(
+      moviesPageData?.results.map((movie) => {
+        return movie.original_language;
+      })
+    );
+    setLanguageOptions([...languageOptions].map((lang) => ({ name: lang })));
+  }, [moviesPageData]);
+
+  //Scroll page up when page number changes
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [pageNumber]);
 
+  //Close modal when clicking outside of it
   useOutsideClick(movieModalRef, () => setModalMovieId(null));
 
-  const onMovieCardClick = (movieId: number) => {
+  const openModalOnMovieCardClick = (movieId: number) => {
     setModalMovieId(movieId);
   };
+
   return (
     <div className="cards">
       {modalMovieId && <MovieModal ref={movieModalRef} movieId={modalMovieId} />}
       {displayCards?.map((movie) => {
         return (
           <MovieCard
-            onClick={() => onMovieCardClick(movie.id)}
+            onClick={() => openModalOnMovieCardClick(movie.id)}
             title={movie.title}
             description={movie.overview}
             posterPath={movie.poster_path}
@@ -125,7 +148,7 @@ export const CardsContainer = ({
       <Pagination
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
-        maxPages={moviesPage?.total_pages || 0}
+        maxPages={moviesPageData?.total_pages || 0}
       />
     </div>
   );

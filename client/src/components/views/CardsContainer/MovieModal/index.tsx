@@ -23,7 +23,9 @@ export const MovieModal = ({ movieId, ref }: MovieModalProps) => {
             <div className="modalTitle">{movieDetails?.title}</div>
             <div className="modalReleaseDate">{`Release Date: ${movieDetails?.release_date}`}</div>
             <div className="modalBudget">{`Budget: ${movieDetails?.budget}`}</div>
-            <div className="modalGenres">{`Genres: ${movieDetails?.genres}`}</div>
+            <div className="modalGenres">{`Genres: ${movieDetails?.genres.map(
+              (genre) => ` ${genre.name}`
+            )}`}</div>
           </div>
           <div className="modalFullDescription">{movieDetails?.overview}</div>
           <ScoreView score={(movieDetails && roundRateScore(movieDetails.vote_average)) || 0} />

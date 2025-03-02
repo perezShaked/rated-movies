@@ -6,15 +6,17 @@ import { BooleanSort } from './BooleanSort';
 import './ManagementBanner.css';
 
 type ManagementBannerProps = {
-  searchValue: string;
-  onSearchValueChange: (value: string) => void;
-  hideAdult: boolean;
-  onHideAdultChange: () => void;
   languageOptions: { name: string }[] | undefined;
-  languageSortValue: { name: string } | null;
-  setLanguageSortValue: (value: { name: string } | null) => void;
-  genresSortValue: { name: string; id?: number } | null;
-  setGenresSortValue: (value: { name: string; id: number } | null) => void;
+  searchValueControl: { value: string; setFunc: (value: string) => void };
+  hideAdultControl: { value: boolean; setFunc: () => void };
+  languageSortValueControl: {
+    value?: { name: string };
+    setFunc: (value?: { name: string }) => void;
+  };
+  genresSortValueControl: {
+    value?: { name: string; id?: number };
+    setFunc: (value?: { name: string; id: number }) => void;
+  };
   releaseYearSortEndControl: { value?: number; setFunc: (start?: number) => void };
   releaseYearSortStartControl: { value?: number; setFunc: (start?: number) => void };
   rateSortStartControl: { value?: number; setFunc: (start?: number) => void };
@@ -24,15 +26,11 @@ type ManagementBannerProps = {
 };
 
 export const ManagementBanner = ({
-  onSearchValueChange,
-  searchValue,
-  hideAdult,
-  onHideAdultChange,
   languageOptions,
-  languageSortValue,
-  setLanguageSortValue,
-  genresSortValue,
-  setGenresSortValue,
+  searchValueControl,
+  hideAdultControl,
+  languageSortValueControl,
+  genresSortValueControl,
   releaseYearSortEndControl,
   releaseYearSortStartControl,
   rateSortStartControl,
@@ -44,24 +42,24 @@ export const ManagementBanner = ({
 
   return (
     <div className="managementContainer">
-      <SearchBar value={searchValue} onChange={onSearchValueChange} />
+      <SearchBar value={searchValueControl.value} onChange={searchValueControl.setFunc} />
       <BooleanSort
         activeTitle="Adult hidden"
         inactiveTitle="Hide adult"
-        isActive={hideAdult}
-        onClick={onHideAdultChange}
+        isActive={hideAdultControl.value}
+        onClick={hideAdultControl.setFunc}
       />
       <Dropdown
         title="genres"
         options={moviesGenres.movieGenres?.genres}
-        value={genresSortValue ?? null}
-        setValue={setGenresSortValue}
+        value={genresSortValueControl.value ?? undefined}
+        setValue={genresSortValueControl.setFunc}
       />
       <Dropdown
         title="language"
         options={languageOptions}
-        value={languageSortValue}
-        setValue={setLanguageSortValue}
+        value={languageSortValueControl.value}
+        setValue={languageSortValueControl.setFunc}
       />
       <RangeSort
         endValueTitle="To"

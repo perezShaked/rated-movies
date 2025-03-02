@@ -6,18 +6,14 @@ export const App = () => {
   const [searchValue, setSearchValue] = useState('');
   const [hideAdult, setHideAdult] = useState(false);
   const [languageOptions, setLanguageOptions] = useState<{ name: string }[]>();
-  const [languageSortValue, setLanguageSortValue] = useState<{ name: string } | null>(null);
-  const [genresSortValue, setGenresSortValue] = useState<{ name: string; id: number } | null>(null);
+  const [languageSortValue, setLanguageSortValue] = useState<{ name: string }>();
+  const [genresSortValue, setGenresSortValue] = useState<{ name: string; id: number }>();
   const [releaseYearSortStart, setReleaseYearSortStart] = useState<number>();
   const [releaseYearSortEnd, setReleaseYearSortEnd] = useState<number>();
   const [rateSortStart, setRateSortStart] = useState<number>();
   const [rateSortEnd, setRateSortEnd] = useState<number>();
   const [voteCountSortStart, setVoteCountSortStart] = useState<number>();
   const [voteCountSortEnd, setVoteCountSortEnd] = useState<number>();
-
-  const onSearchValueChange = (value: string) => {
-    setSearchValue(value);
-  };
 
   const onHideAdultChange = () => {
     setHideAdult((hideAdult) => !hideAdult);
@@ -31,15 +27,11 @@ export const App = () => {
       </div>
       <div className="appContainer">
         <ManagementBanner
-          searchValue={searchValue}
-          onSearchValueChange={onSearchValueChange}
-          hideAdult={hideAdult}
-          onHideAdultChange={onHideAdultChange}
           languageOptions={languageOptions}
-          languageSortValue={languageSortValue}
-          setLanguageSortValue={setLanguageSortValue}
-          genresSortValue={genresSortValue}
-          setGenresSortValue={setGenresSortValue}
+          searchValueControl={{ value: searchValue, setFunc: setSearchValue }}
+          hideAdultControl={{ value: hideAdult, setFunc: onHideAdultChange }}
+          languageSortValueControl={{ value: languageSortValue, setFunc: setLanguageSortValue }}
+          genresSortValueControl={{ value: genresSortValue, setFunc: setGenresSortValue }}
           releaseYearSortEndControl={{ value: releaseYearSortEnd, setFunc: setReleaseYearSortEnd }}
           releaseYearSortStartControl={{
             value: releaseYearSortStart,

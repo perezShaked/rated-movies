@@ -4,8 +4,8 @@ import './Dropdown.css';
 type DropdownProps = {
   title: string;
   options: { name: string; id?: number }[] | undefined;
-  value: { name: string; id?: number } | null;
-  setValue: (value: { name: string; id: number } | null) => void;
+  value?: { name: string; id?: number };
+  setValue: (value?: { name: string; id: number }) => void;
 };
 
 export const Dropdown = ({ title, options, value, setValue }: DropdownProps) => {
@@ -25,7 +25,7 @@ export const Dropdown = ({ title, options, value, setValue }: DropdownProps) => 
                 key={index}
                 onClick={() => {
                   value?.name === option.name
-                    ? setValue(null)
+                    ? setValue(undefined)
                     : setValue({ name: option.name, id: option.id || 0 });
                   setIsOpen(false);
                 }}
